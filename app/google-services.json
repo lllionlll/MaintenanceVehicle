@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "778668088329",
+    "project_id": "maintenancevehicle-e1154",
+    "storage_bucket": "maintenancevehicle-e1154.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778668088329:android:a6e518e3d0399f17802cd8",
+        "android_client_info": {
+          "package_name": "io.maintenancevehicle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYEesIOMiO3e2r09Q7cwrKcM_JRsE_J7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/menuFragment">
+
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="io.maintenancevehicle.views.menu.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu">
+        <action
+            android:id="@+id/action_menuFragment_to_historyMaintenanceVehicleFragment"
+            app:destination="@id/historyMaintenanceVehicleFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_maintenanceVehicleListFragment"
+            app:destination="@id/maintenanceVehicleListFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_clientManagementFragment"
+            app:destination="@id/customerManagementFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_serviceMaintenanceFragment"
+            app:destination="@id/serviceMaintenanceFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_scheduleFragment"
+            app:destination="@id/scheduleFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_vehicleListFragment"
+            app:destination="@id/vehicleListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyMaintenanceVehicleFragment"
+        android:name="io.maintenancevehicle.views.history_maintenance.HistoryMaintenanceFragment"
+        android:label="HistoryMaintenanceVehicleFragment"
+        tools:layout="@layout/fragment_history_maintenance" />
+    <fragment
+        android:id="@+id/maintenanceVehicleListFragment"
+        android:name="io.maintenancevehicle.views.maintenance_vehicle.MaintenanceVehicleFragment"
+        android:label="MaintenanceVehicleListFragment"
+        tools:layout="@layout/fragment_maintenance_vehicle" />
+    <fragment
+        android:id="@+id/customerManagementFragment"
+        android:name="io.maintenancevehicle.views.customer.customer_management.CustomerManagementFragment"
+        android:label="fragment_customer_management"
+        tools:layout="@layout/fragment_customer_management">
+        <action
+            android:id="@+id/action_customerManagementFragment_to_customerDetailFragment"
+            app:destination="@id/customerDetailFragment" />
+        <action
+            android:id="@+id/action_customerManagementFragment_to_customerAddFragment"
+            app:destination="@id/customerAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customerAddFragment"
+        android:name="io.maintenancevehicle.views.customer.customer_add.CustomerAddFragment"
+        android:label="fragment_customer_add"
+        tools:layout="@layout/fragment_customer_add" />
+    <fragment
+        android:id="@+id/customerEditFragment"
+        android:name="io.maintenancevehicle.views.customer.customer_edit.CustomerEditFragment"
+        android:label="fragment_customer_edit"
+        tools:layout="@layout/fragment_customer_edit" />
+    <fragment
+        android:id="@+id/customerDetailFragment"
+        android:name="io.maintenancevehicle.views.customer.customer_detail.CustomerDetailFragment"
+        android:label="fragment_customer_detail"
+        tools:layout="@layout/fragment_customer_detail">
+        <argument
+            android:name="customerId"
+            android:defaultValue=""
+            app:argType="string" />
+        <action
+            android:id="@+id/action_customerDetailFragment_to_customerEditFragment"
+            app:destination="@id/customerEditFragment" />
+        <action
+            android:id="@+id/action_customerDetailFragment_to_imagePreViewFragment"
+            app:destination="@id/imagePreViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/serviceMaintenanceFragment"
+        android:name="io.maintenancevehicle.views.service.service_maintenance.ServiceMaintenanceFragment"
+        android:label="fragment_service_maintenance"
+        tools:layout="@layout/fragment_service_maintenance">
+        <action
+            android:id="@+id/action_serviceMaintenanceFragment_to_serviceAddFragment"
+            app:destination="@id/serviceAddFragment" />
+        <action
+            android:id="@+id/action_serviceMaintenanceFragment_to_serviceDetailFragment"
+            app:destination="@id/serviceDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/serviceAddFragment"
+        android:name="io.maintenancevehicle.views.service.service_add.ServiceAddFragment"
+        android:label="fragment_service_add"
+        tools:layout="@layout/fragment_service_add" />
+    <fragment
+        android:id="@+id/serviceEditFragment"
+        android:name="io.maintenancevehicle.views.service.service_edit.ServiceEditFragment"
+        android:label="fragment_service_edit"
+        tools:layout="@layout/fragment_service_edit" />
+    <fragment
+        android:id="@+id/serviceDetailFragment"
+        android:name="io.maintenancevehicle.views.service.service_detail.ServiceDetailFragment"
+        android:label="fragment_service_detail"
+        tools:layout="@layout/fragment_service_detail">
+        <action
+            android:id="@+id/action_serviceDetailFragment_to_serviceEditFragment"
+            app:destination="@id/serviceEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scheduleFragment"
+        android:name="io.maintenancevehicle.views.schedule_view.schedule.ScheduleFragment"
+        android:label="ScheduleFragment"
+        tools:layout="@layout/fragment_schedule">
+        <action
+            android:id="@+id/action_scheduleFragment_to_scheduleDetailFragment"
+            app:destination="@id/scheduleDetailFragment" />
+        <action
+            android:id="@+id/action_scheduleFragment_to_scheduleAddFragment"
+            app:destination="@id/scheduleAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scheduleAddFragment"
+        android:name="io.maintenancevehicle.views.schedule_view.schedule_add.ScheduleAddFragment"
+        android:label="ScheduleAddFragment"
+        tools:layout="@layout/fragment_schedule_add" />
+    <fragment
+        android:id="@+id/scheduleDetailFragment"
+        android:name="io.maintenancevehicle.views.schedule_view.schedule_detail.ScheduleDetailFragment"
+        android:label="ScheduleDetailFragment"
+        tools:layout="@layout/fragment_schedule_detail">
+        <action
+            android:id="@+id/action_scheduleDetailFragment_to_scheduleEditFragment"
+            app:destination="@id/scheduleEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scheduleEditFragment"
+        android:name="io.maintenancevehicle.views.schedule_view.schedule_edit.ScheduleEditFragment"
+        android:label="ScheduleEditFragment"
+        tools:layout="@layout/fragment_schedule_edit" />
+    <fragment
+        android:id="@+id/vehicleListFragment"
+        android:name="io.maintenancevehicle.views.vehicle.vehicle_list.VehicleListFragment"
+        android:label="VehicleListFragment"
+        tools:layout="@layout/fragment_vehicle_list">
+        <action
+            android:id="@+id/action_vehicleListFragment_to_maintenanceVehicleDetailFragment"
+            app:destination="@id/maintenanceVehicleDetailFragment" />
+        <action
+            android:id="@+id/action_vehicleListFragment_to_vehicleEditFragment"
+            app:destination="@id/vehicleEditFragment" />
+        <action
+            android:id="@+id/action_vehicleListFragment_to_vehicleAddFragment"
+            app:destination="@id/vehicleAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/maintenanceVehicleDetailFragment"
+        android:name="io.maintenancevehicle.views.maintenance_vehicle_detail.MaintenanceVehicleDetailFragment"
+        android:label="MaintenanceVehicleDetailFragment"
+        tools:layout="@layout/fragment_vehicle_detail" />
+    <fragment
+        android:id="@+id/vehicleEditFragment"
+        android:name="io.maintenancevehicle.views.vehicle.vehicle_edit.VehicleEditFragment"
+        android:label="VehicleEditFragment"
+        tools:layout="@layout/fragment_vehicle_edit" />
+    <fragment
+        android:id="@+id/vehicleAddFragment"
+        android:name="io.maintenancevehicle.views.vehicle.vehicle_add.VehicleAddFragment"
+        android:label="VehicleAddFragment"
+        tools:layout="@layout/fragment_vehicle_add" />
+    <fragment
+        android:id="@+id/imagePreViewFragment"
+        android:name="io.maintenancevehicle.views.image_preview.ImagePreViewFragment"
+        android:label="ImagePreViewFragment"
+        tools:layout="@layout/fragment_image_preview">
+        <argument
+            android:name="customerId"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
+</navigation>
