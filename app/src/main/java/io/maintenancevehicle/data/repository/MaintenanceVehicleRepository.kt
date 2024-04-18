@@ -80,4 +80,56 @@ class MaintenanceVehicleRepository @Inject constructor(
         }
     }
 
+    fun addData(ref: String, data: Any, id: String): DataResult<Boolean> {
+        return try {
+            val collectionRef = fb.collection(ref)
+            val querySnapshot = collectionRef.document(
+                id
+            ).set(data)
+
+            when (val handleFirebaseResult = handleFirebaseTask(querySnapshot)) {
+                is ApiSuccess -> {
+                    DataResult.Success(true)
+                }
+
+                is ApiException -> {
+                    val message = handleFirebaseResult.e.message
+                    DataResult.Error(message = message)
+                }
+
+                else -> {
+                    DataResult.Error()
+                }
+            }
+        } catch (e: Exception) {
+            DataResult.Error(message = e.message)
+        }
+    }
+
+    fun deleteData(ref: String, id: String) : DataResult<Any> {
+        return try {
+            val collectionRef = fb.collection(ref)
+            val querySnapshot = collectionRef.document(
+                id
+            ).delete()
+
+            when (val handleFirebaseResult = handleFirebaseTask(querySnapshot)) {
+                is ApiSuccess -> {
+                    DataResult.Success(true)
+                }
+
+                is ApiException -> {
+                    val message = handleFirebaseResult.e.message
+                    DataResult.Error(message = message)
+                }
+
+                else -> {
+                    DataResult.Error()
+                }
+            }
+        } catch (e: Exception) {
+            DataResult.Error(message = e.message)
+        }
+    }
+
 }
