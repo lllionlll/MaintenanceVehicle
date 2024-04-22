@@ -1,50 +1,38 @@
 package io.maintenancevehicle.views.customer.customer_add
-
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.maintenancevehicle.data.model.Customer
+import io.maintenancevehicle.data.repository.MaintenanceVehicleRepository
+import io.maintenancevehicle.data.source.remote.DataResult
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
-private const val TAG = "CustomerAddViewModel"
 
 @HiltViewModel
 class CustomerAddViewModel @Inject constructor(
-    private val customerRepository: CustomerRepository
-) : ViewModel() {
-    val isLoading = MutableLiveData<Boolean>()
-    fun saveCustomer(customer: Customer) {
-        viewModelScope.launch {
-            try {
-                isLoading.value = true
-                customerRepository.saveCustomer<Customer>(
-                    ref = "customers",
-                    customer = customer
-                )
+    private val maintenanceVehicleRepository: MaintenanceVehicleRepository
+): ViewModel() {
 
-                Log.e(TAG, "saveCustomer: ")
-                isLoading.value = false
-            } catch (e: Exception) {
-                isLoading.value = false
-            }
-        }
-    }
-    fun saveImage(customer: Customer) {
+    fun addCustomer(customer: Customer) {
         viewModelScope.launch {
             try {
-                isLoading.value = true
-                customerRepository.saveCustomer<Customer>(
-                    ref = "customers",
-                    customer = customer
-                )
-                Log.e(TAG, "saveCustomer: ")
-                isLoading.value = false
+                val addCustomerResult = withContext(Dispatchers.IO) {
+                    maintenanceVehicleRepository.addData(
+                        "customers",
+                        data = customer,
+                        id = customer.id
+                    )
+                }
+                if (addCustomerResult is DataResult.Success) {
+
+                }
             } catch (e: Exception) {
-                isLoading.value = false
+
             }
         }
     }
+
+
 }

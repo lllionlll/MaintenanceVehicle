@@ -1,19 +1,17 @@
 package io.maintenancevehicle.views.customer.customer_add
 
+
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.graphics.toColor
-import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.maintenancevehicle.bases.BaseFragment
 import io.maintenancevehicle.data.model.Customer
 import io.maintenancevehicle.databinding.FragmentCustomerAddBinding
-import io.maintenancevehicle.databinding.FragmentCustomerManagementBinding
+
 import io.maintenancevehicle.utils.DateFunction
-import io.maintenancevehicle.utils.LoadingDialog
 import io.maintenancevehicle.utils.hideKeyboard
-import io.maintenancevehicle.views.customer.customer_detail.CustomerDetailViewModel
+
 
 @AndroidEntryPoint
 class CustomerAddFragment : BaseFragment<FragmentCustomerAddBinding>(
@@ -36,6 +34,7 @@ class CustomerAddFragment : BaseFragment<FragmentCustomerAddBinding>(
         super.initData()
         binding.gender.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, genderList)
     }
+
     override fun handleEvent() {
         super.handleEvent()
         binding.btnBack.setOnClickListener {
@@ -75,30 +74,7 @@ class CustomerAddFragment : BaseFragment<FragmentCustomerAddBinding>(
             }
         }
         binding.btnSave.setOnClickListener {
-            if(check()){
-                binding.apply {
-                    customer = Customer(
-                        name = name.text.toString(),
-                        birthday = birthday.text.toString(),
-                        gender = genderList[gender.selectedItemPosition],
-                        homeTown =  address.text.toString(),
-                        phoneNumber = phone.text.toString(),
-                        createdAt = dayCreate.text.toString(),
-                        updatedAt = dayUpdate.text.toString(),
-                        note = note.text.toString(),
-                        imageUrl = "",
-                    )
-                    customerAddViewModel.saveCustomer(customer)
-                    customerAddViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-                        if (isLoading) {
-                            LoadingDialog.showLoading(requireContext())
-                        } else {
-                            LoadingDialog.hide()
-                            CustomerAddRoute.backScreen(this@CustomerAddFragment)
-                        }
-                    }
-                }
-            }
+
         }
         binding.avatar.setOnClickListener {
             galleryLauncher.launch("image/*")

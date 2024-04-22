@@ -40,5 +40,22 @@ class CustomerDetailViewModel @Inject constructor(
             }
         }
     }
+    fun deleteCustomer(customerId: String) {
+        viewModelScope.launch {
+            try {
+                val deleteCustomerResult = withContext(Dispatchers.IO) {
+                    maintenanceVehicleRepository.deleteData(
+                        "customers",
+                        id = customerId
+                    )
+                }
+                if (deleteCustomerResult is DataResult.Success) {
+
+                }
+            } catch (e: Exception) {
+
+            }
+        }
+    }
 
 }

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".views.customer.customer_add.CustomerAddFragment">
 
+
     <LinearLayout
         android:id="@+id/layoutAppbar"
         android:layout_width="match_parent"
@@ -395,5 +396,4 @@
 <!--        </LinearLayout>-->
 
 <!--    </FrameLayout>-->
-
 </androidx.constraintlayout.widget.ConstraintLayout>
