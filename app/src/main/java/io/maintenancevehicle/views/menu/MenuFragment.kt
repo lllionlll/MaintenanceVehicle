@@ -10,7 +10,6 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>(
 
     override fun handleEvent() {
         super.handleEvent()
-
         binding.clientManagement.setOnClickListener {
             MenuRoute.goToClientManagement(this)
         }

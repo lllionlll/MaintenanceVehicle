@@ -57,7 +57,9 @@ class MaintenanceVehicleRepository @Inject constructor(
         return try {
             val getVocabularyList = fb.collection(ref)
                 .whereEqualTo("id", id)
-                .get()
+                .get().addOnSuccessListener {
+
+                }
 
             when (val handleFirebaseResult = handleFirebaseTask(getVocabularyList)) {
 
