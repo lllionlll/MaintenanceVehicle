@@ -1,15 +1,13 @@
 package io.maintenancevehicle.di
 
 import android.content.Context
-import androidx.room.Room.databaseBuilder
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.maintenancevehicle.data.repository.MaintenanceVehicleRepository
-import io.maintenancevehicle.data.source.local.MaintenanceVehicleDatabase
-import io.maintenancevehicle.data.source.local.MaintenanceVehicleDataSource
 import javax.inject.Singleton
 
 @Module
@@ -26,43 +24,25 @@ object AppModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DataSourceModule {
-
-    @Singleton
-    @Provides
-    fun provideMaintenanceVehicleLocalDataSource(
-        maintenanceVehicleDatabase: MaintenanceVehicleDatabase
-    ): MaintenanceVehicleDataSource {
-        return MaintenanceVehicleDataSource(maintenanceVehicleDatabase.maintenanceVehicleDao())
-    }
-
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
     @Singleton
     @Provides
     fun provideMaintenanceVehicleRepository(
-        maintenanceVehicleDataSource: MaintenanceVehicleDataSource
+        firebaseFireStore: FirebaseFirestore
     ): MaintenanceVehicleRepository {
-        return MaintenanceVehicleRepository(maintenanceVehicleDataSource)
+        return MaintenanceVehicleRepository(firebaseFireStore)
     }
 
 }
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DatabaseModule {
+class FirebaseModule {
 
     @Singleton
     @Provides
-    fun provideDataBase(@ApplicationContext context: Context): MaintenanceVehicleDatabase {
-        return databaseBuilder(
-            context.applicationContext,
-            MaintenanceVehicleDatabase::class.java,
-            "maintenance_vehicle.db"
-        ).build()
+    fun provideFirebaseFireStore(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
     }
 }

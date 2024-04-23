@@ -4,10 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.maintenancevehicle.data.model.Customer
 import io.maintenancevehicle.data.model.Service
 import io.maintenancevehicle.data.repository.MaintenanceVehicleRepository
-import io.maintenancevehicle.data.source.remote.DataResult
+import io.maintenancevehicle.data.DataResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -20,7 +19,7 @@ class ServiceMaintenanceViewModel @Inject constructor(
 ): ViewModel() {
 
     val isLoading = MutableLiveData<Boolean>()
-    val customerList = MutableLiveData<MutableList<Service>>()
+    val serviceList = MutableLiveData<MutableList<Service>>()
 
     fun getServices() {
         viewModelScope.launch {
@@ -31,7 +30,7 @@ class ServiceMaintenanceViewModel @Inject constructor(
                 }
                 if (getServiceListResult is DataResult.Success) {
                     val serviceListData = getServiceListResult.data
-                    customerList.value = serviceListData
+                    serviceList.value = serviceListData
                 }
                 isLoading.value = false
             } catch (e: Exception) {

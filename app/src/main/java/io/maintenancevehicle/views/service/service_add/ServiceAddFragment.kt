@@ -9,4 +9,11 @@ class ServiceAddFragment : BaseFragment<FragmentServiceAddBinding>(
     FragmentServiceAddBinding::inflate
 ) {
 
+    override fun handleEvent() {
+        super.handleEvent()
+        binding.btnBack.setOnClickListener {
+            ServiceAddRoute.backScreen(this)
+        }
+    }
+
 }

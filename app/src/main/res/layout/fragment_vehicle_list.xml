@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".views.customer.customer_management.CustomerManagementFragment">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/layoutAppbar"
@@ -40,5 +39,16 @@
             android:src="@drawable/ic_edit" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/addVehicle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/bg_corner_primay"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

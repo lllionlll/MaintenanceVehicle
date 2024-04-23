@@ -14,4 +14,11 @@ object ServiceMaintenanceRoute {
             ServiceMaintenanceFragmentDirections.actionServiceMaintenanceFragmentToServiceAddFragment()
         fragment.findNavController().navigate(action)
     }
+    fun goToServiceDetail(fragment: Fragment, serviceId: String) {
+        val action =
+            ServiceMaintenanceFragmentDirections.actionServiceMaintenanceFragmentToServiceDetailFragment(
+                serviceId = serviceId
+            )
+        fragment.findNavController().navigate(action)
+    }
 }

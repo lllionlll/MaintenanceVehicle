@@ -28,15 +28,24 @@
         <action
             android:id="@+id/action_menuFragment_to_vehicleListFragment"
             app:destination="@id/vehicleListFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_statisticalFragment"
+            app:destination="@id/statisticalFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_widgetListFragment"
+            app:destination="@id/widgetListFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_widgetAddFragment"
+            app:destination="@id/widgetAddFragment" />
     </fragment>
     <fragment
         android:id="@+id/historyMaintenanceVehicleFragment"
-        android:name="io.maintenancevehicle.views.history_maintenance.HistoryMaintenanceFragment"
+        android:name="io.maintenancevehicle.views.maintenance_vehicle_view.history_maintenance.HistoryMaintenanceFragment"
         android:label="HistoryMaintenanceVehicleFragment"
         tools:layout="@layout/fragment_history_maintenance" />
     <fragment
         android:id="@+id/maintenanceVehicleListFragment"
-        android:name="io.maintenancevehicle.views.maintenance_vehicle.MaintenanceVehicleFragment"
+        android:name="io.maintenancevehicle.views.maintenance_vehicle_view.maintenance_vehicle.MaintenanceVehicleFragment"
         android:label="MaintenanceVehicleListFragment"
         tools:layout="@layout/fragment_maintenance_vehicle" />
     <fragment
@@ -107,6 +116,10 @@
         <action
             android:id="@+id/action_serviceDetailFragment_to_serviceEditFragment"
             app:destination="@id/serviceEditFragment" />
+        <argument
+            android:name="serviceId"
+            android:defaultValue=""
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/scheduleFragment"
@@ -156,7 +169,7 @@
     </fragment>
     <fragment
         android:id="@+id/maintenanceVehicleDetailFragment"
-        android:name="io.maintenancevehicle.views.maintenance_vehicle_detail.MaintenanceVehicleDetailFragment"
+        android:name="io.maintenancevehicle.views.maintenance_vehicle_view.maintenance_vehicle_detail.MaintenanceVehicleDetailFragment"
         android:label="MaintenanceVehicleDetailFragment"
         tools:layout="@layout/fragment_vehicle_detail" />
     <fragment
@@ -179,4 +192,41 @@
             android:defaultValue=""
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/statisticalFragment"
+        android:name="io.maintenancevehicle.views.statistical.StatisticalFragment"
+        android:label="fragment_statistical"
+        tools:layout="@layout/fragment_statistical" />
+    <fragment
+        tools:layout="@layout/fragment_widget_list"
+        android:id="@+id/widgetListFragment"
+        android:name="io.maintenancevehicle.views.widget.widget_list.WidgetListFragment"
+        android:label="WidgetListFragment" >
+        <action
+            android:id="@+id/action_widgetListFragment_to_widgetDetailFragment"
+            app:destination="@id/widgetDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/widgetAddFragment"
+        android:name="io.maintenancevehicle.views.widget.widget_add.WidgetAddFragment"
+        android:label="WidgetAddFragment"
+        tools:layout="@layout/fragment_widget_add"/>
+    <fragment
+        tools:layout="@layout/fragment_widget_detail"
+        android:id="@+id/widgetDetailFragment"
+        android:name="io.maintenancevehicle.views.widget.widget_detail.WidgetDetailFragment"
+        android:label="WidgetDetailFragment" >
+        <action
+            android:id="@+id/action_widgetDetailFragment_to_widgetEditFragment"
+            app:destination="@id/widgetEditFragment" />
+        <argument
+            android:name="widgetId"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_widget_edit"
+        android:id="@+id/widgetEditFragment"
+        android:name="io.maintenancevehicle.views.widget.widget_edit.WidgetEditFragment"
+        android:label="WidgetEditFragment" />
 </navigation>

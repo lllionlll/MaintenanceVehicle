@@ -86,7 +86,7 @@
                 android:layout_height="match_parent" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/historyMaintenanceVehicleFragment"
+                android:id="@+id/statistical"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -102,21 +102,21 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imgHistory"
+                        android:id="@+id/imgStatistical"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_history" />
+                        android:src="@drawable/ic_statistical" />
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/textStatistical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="8dp"
-                        android:text="Lịch sử bảo dưỡng"
+                        android:text="Thống kê"
                         android:textColor="@color/black" />
                 </LinearLayout>
 
@@ -269,7 +269,7 @@
                 android:layout_height="match_parent" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/statistical"
+                android:id="@+id/historyMaintenanceVehicle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -284,21 +284,112 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imgStatistical"
+                        android:id="@+id/imgHistory"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_statistical" />
+                        android:src="@drawable/ic_history" />
 
                     <TextView
-                        android:id="@+id/textStatistical"
+                        android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="8dp"
-                        android:text="Thống kê"
+                        android:text="Lịch sử bảo dưỡng"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="match_parent" />
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/vehicleList"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:elevation="1dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F8F8F8F8"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgVehicle"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_vehicle" />
+
+                    <TextView
+                        android:id="@+id/textVehicle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="8dp"
+                        android:text="Phương tiện"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="match_parent" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/widgetList"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:elevation="1dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F8F8F8F8"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgWidget"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_widget" />
+
+                    <TextView
+                        android:id="@+id/textWidget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="8dp"
+                        android:text="Phụ tùng"
                         android:textColor="@color/black" />
                 </LinearLayout>
 

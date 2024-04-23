@@ -9,4 +9,11 @@ class VehicleEditFragment : BaseFragment<FragmentVehicleEditBinding>(
     FragmentVehicleEditBinding::inflate
 ) {
 
+    override fun handleEvent() {
+        super.handleEvent()
+        binding.btnBack.setOnClickListener {
+            VehicleEditRoute.backScreen(this)
+        }
+    }
+
 }

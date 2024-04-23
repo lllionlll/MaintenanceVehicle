@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.maintenancevehicle.data.model.Customer
 import io.maintenancevehicle.data.repository.MaintenanceVehicleRepository
-import io.maintenancevehicle.data.source.remote.DataResult
+import io.maintenancevehicle.data.DataResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CustomerDetailViewModel @Inject constructor(
     private val maintenanceVehicleRepository: MaintenanceVehicleRepository
-): ViewModel() {
+) : ViewModel() {
 
     val isLoading = MutableLiveData<Boolean>()
     val customer = MutableLiveData<Customer>()
@@ -24,15 +24,15 @@ class CustomerDetailViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 isLoading.value = true
-                val getCustomerListResult = withContext(Dispatchers.IO) {
+                val getCustomerDetailResult = withContext(Dispatchers.IO) {
                     maintenanceVehicleRepository.getDetailById<Customer>(
                         ref = "customers",
                         id = customerId
                     )
                 }
-                if (getCustomerListResult is DataResult.Success) {
-                    val unitListData = getCustomerListResult.data
-                    customer.value = unitListData
+                if (getCustomerDetailResult is DataResult.Success) {
+                    val customerData = getCustomerDetailResult.data
+                    customer.value = customerData
                 }
                 isLoading.value = false
             } catch (e: Exception) {

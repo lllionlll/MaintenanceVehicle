@@ -2,14 +2,35 @@ package io.maintenancevehicle.views.service.service_maintenance
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import io.maintenancevehicle.R
 import io.maintenancevehicle.bases.BaseAdapter
 import io.maintenancevehicle.data.model.Service
 import io.maintenancevehicle.databinding.ItemServiceBinding
 
-class ServiceMaintenanceAdapter : BaseAdapter<Service, ItemServiceBinding>() {
+class ServiceMaintenanceAdapter(
+    val onClickServiceDetail: (Service) -> Unit
+) : BaseAdapter<Service, ItemServiceBinding>() {
 
     inner class ServiceViewHolder(itemServiceBinding: ItemServiceBinding) : BaseViewHolder(itemServiceBinding) {
+
+        init {
+            binding.root.setOnClickListener {
+                onClickServiceDetail.invoke(itemList[layoutPosition])
+            }
+        }
+
         override fun setData(item: Service) {
+            binding.serviceName.text = ""
+            binding.serviceName.text = item.name
+
+            Glide.with(binding.serviceImage.context)
+                .load(R.mipmap.ic_launcher)
+                .into(binding.serviceImage)
+
+            Glide.with(binding.serviceImage.context)
+                .load(item.image)
+                .into(binding.serviceImage)
 
         }
 

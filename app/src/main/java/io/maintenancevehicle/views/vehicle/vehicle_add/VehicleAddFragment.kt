@@ -9,4 +9,11 @@ class VehicleAddFragment : BaseFragment<FragmentVehicleAddBinding>(
     FragmentVehicleAddBinding::inflate
 ) {
 
+    override fun handleEvent() {
+        super.handleEvent()
+        binding.btnBack.setOnClickListener {
+            VehicleAddRoute.backScreen(this)
+        }
+    }
+
 }

@@ -20,6 +20,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) {
+
     }
 
     override fun initView() {

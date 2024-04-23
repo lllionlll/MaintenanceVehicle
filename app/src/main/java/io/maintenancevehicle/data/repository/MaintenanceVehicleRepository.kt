@@ -1,27 +1,15 @@
 package io.maintenancevehicle.data.repository
 
 import com.google.firebase.firestore.FirebaseFirestore
-import io.maintenancevehicle.data.model.VehicleDetail
-import io.maintenancevehicle.data.source.local.MaintenanceVehicleDataSource
-import io.maintenancevehicle.data.source.remote.ApiException
-import io.maintenancevehicle.data.source.remote.ApiSuccess
-import io.maintenancevehicle.data.source.remote.DataResult
-import io.maintenancevehicle.data.source.remote.handleFirebaseTask
+import io.maintenancevehicle.data.ApiException
+import io.maintenancevehicle.data.ApiSuccess
+import io.maintenancevehicle.data.DataResult
+import io.maintenancevehicle.data.handleFirebaseTask
 import javax.inject.Inject
 
 class MaintenanceVehicleRepository @Inject constructor(
-    private val maintenanceVehicleDataSource: MaintenanceVehicleDataSource
+    private val fb: FirebaseFirestore
 ) {
-
-    private val fb = FirebaseFirestore.getInstance()
-
-    suspend fun saveVehicles(vehicleDetailList: List<VehicleDetail>) {
-        maintenanceVehicleDataSource.saveVehicles(vehicleDetailList)
-    }
-
-    suspend fun getVehicles(): List<VehicleDetail> {
-        return maintenanceVehicleDataSource.getVehicles()
-    }
 
     @Suppress("NON_PUBLIC_CALL_FROM_PUBLIC_INLINE")
     inline fun <reified T> getList(ref: String): DataResult<MutableList<T>> {
@@ -55,15 +43,15 @@ class MaintenanceVehicleRepository @Inject constructor(
         id: String
     ): DataResult<T> {
         return try {
-            val getVocabularyList = fb.collection(ref)
+            val getList = fb.collection(ref)
                 .whereEqualTo("id", id)
                 .get()
 
-            when (val handleFirebaseResult = handleFirebaseTask(getVocabularyList)) {
+            when (val handleFirebaseResult = handleFirebaseTask(getList)) {
 
                 is ApiSuccess -> {
-                    val vocabularyList = handleFirebaseResult.data.toObjects(T::class.java)
-                    DataResult.Success(vocabularyList.first())
+                    val list = handleFirebaseResult.data.toObjects(T::class.java)
+                    DataResult.Success(list.first())
                 }
 
                 is ApiException -> {

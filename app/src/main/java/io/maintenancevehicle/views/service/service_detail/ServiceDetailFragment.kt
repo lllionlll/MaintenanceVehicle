@@ -9,4 +9,11 @@ class ServiceDetailFragment : BaseFragment<FragmentServiceDetailBinding>(
     FragmentServiceDetailBinding::inflate
 ) {
 
+    override fun handleEvent() {
+        super.handleEvent()
+        binding.btnBack.setOnClickListener {
+            ServiceDetailRoute.backScreen(this)
+        }
+    }
+
 }

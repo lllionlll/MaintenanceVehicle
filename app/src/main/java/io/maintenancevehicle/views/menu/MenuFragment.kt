@@ -1,6 +1,5 @@
 package io.maintenancevehicle.views.menu
 
-import android.view.Menu
 import io.maintenancevehicle.bases.BaseFragment
 import io.maintenancevehicle.databinding.FragmentMenuBinding
 
@@ -15,7 +14,7 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>(
             MenuRoute.goToClientManagement(this)
         }
 
-        binding.historyMaintenanceVehicleFragment.setOnClickListener {
+        binding.historyMaintenanceVehicle.setOnClickListener {
             MenuRoute.goToHistoryMaintenanceVehicle(this)
         }
 
@@ -29,6 +28,26 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>(
 
         binding.serviceMaintenance.setOnClickListener {
             MenuRoute.goToServiceMaintenance(this)
+        }
+
+        binding.scheduleMaintenance.setOnClickListener {
+            MenuRoute.goToScheduleMaintenance(this)
+        }
+
+        binding.statistical.setOnClickListener {
+            MenuRoute.goToStatistical(this)
+        }
+
+        binding.maintenanceVehicle.setOnClickListener {
+            MenuRoute.goToMaintenanceVehicle(this)
+        }
+
+        binding.vehicleList.setOnClickListener {
+            MenuRoute.goToVehicleList(this)
+        }
+
+        binding.widgetList.setOnClickListener {
+            MenuRoute.goToWidgetVehicle(this)
         }
     }
 }

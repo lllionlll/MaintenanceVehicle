@@ -24,4 +24,23 @@ object MenuRoute {
         val action = MenuFragmentDirections.actionMenuFragmentToScheduleFragment()
         fragment.findNavController().navigate(action)
     }
+
+    fun goToStatistical(fragment: Fragment) {
+        val action = MenuFragmentDirections.actionMenuFragmentToStatisticalFragment()
+        fragment.findNavController().navigate(action)
+    }
+
+    fun goToMaintenanceVehicle(fragment: Fragment) {
+        val action = MenuFragmentDirections.actionMenuFragmentToMaintenanceVehicleListFragment()
+        fragment.findNavController().navigate(action)
+    }
+
+    fun goToWidgetVehicle(fragment: Fragment) {
+
+    }
+
+    fun goToVehicleList(fragment: Fragment) {
+        val action = MenuFragmentDirections.actionMenuFragmentToVehicleListFragment()
+        fragment.findNavController().navigate(action)
+    }
 }

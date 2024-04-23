@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.maintenancevehicle.data.model.Customer
 import io.maintenancevehicle.data.repository.MaintenanceVehicleRepository
-import io.maintenancevehicle.data.source.remote.DataResult
+import io.maintenancevehicle.data.DataResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

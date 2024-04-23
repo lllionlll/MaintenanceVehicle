@@ -28,12 +28,12 @@ class ServiceMaintenanceFragment : BaseFragment<FragmentServiceMaintenanceBindin
     private val serviceManagementViewModel by viewModels<ServiceMaintenanceViewModel>()
 
     private val serviceMaintenanceAdapter = ServiceMaintenanceAdapter(
-//        onClickCustomerDetail = { customer ->
-//            CustomerManagementRoute.goToCustomerDetail(
-//                this,
-//                customerId = customer.id
-//            )
-//        }
+        onClickServiceDetail = { service ->
+            ServiceMaintenanceRoute.goToServiceDetail(
+                this,
+                serviceId = service.id
+            )
+        }
     )
 
     override fun initView() {
@@ -54,7 +54,7 @@ class ServiceMaintenanceFragment : BaseFragment<FragmentServiceMaintenanceBindin
             }
         }
 
-        serviceManagementViewModel.customerList.observe(viewLifecycleOwner) { serviceList ->
+        serviceManagementViewModel.serviceList.observe(viewLifecycleOwner) { serviceList ->
             if (serviceList.isNotEmpty()) {
                 serviceMaintenanceAdapter.setItemList(itemList = serviceList)
             }
