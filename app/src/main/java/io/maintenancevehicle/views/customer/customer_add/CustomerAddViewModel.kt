@@ -1,6 +1,10 @@
 package io.maintenancevehicle.views.customer.customer_add
+
+import androidx.core.net.toUri
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.maintenancevehicle.data.model.Customer
 import io.maintenancevehicle.data.repository.MaintenanceVehicleRepository
@@ -8,16 +12,18 @@ import io.maintenancevehicle.data.source.remote.DataResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class CustomerAddViewModel @Inject constructor(
     private val maintenanceVehicleRepository: MaintenanceVehicleRepository
-): ViewModel() {
-
+) : ViewModel() {
+    val isLoading = MutableLiveData<Boolean>()
     fun addCustomer(customer: Customer) {
         viewModelScope.launch {
             try {
+                isLoading.value = true
                 val addCustomerResult = withContext(Dispatchers.IO) {
                     maintenanceVehicleRepository.addData(
                         "customers",
@@ -28,6 +34,7 @@ class CustomerAddViewModel @Inject constructor(
                 if (addCustomerResult is DataResult.Success) {
 
                 }
+                isLoading.value = false
             } catch (e: Exception) {
 
             }
