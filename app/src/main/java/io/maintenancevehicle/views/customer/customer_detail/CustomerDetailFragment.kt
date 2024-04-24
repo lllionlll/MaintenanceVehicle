@@ -39,6 +39,7 @@ class CustomerDetailFragment : BaseFragment<FragmentCustomerDetailBinding>(
             customerDetailViewModel.deleteCustomer(
                 customerId = customer.id
             )
+
         }
 
         binding.customerEdit.setOnClickListener {
