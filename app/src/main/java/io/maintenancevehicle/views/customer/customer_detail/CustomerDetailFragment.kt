@@ -18,12 +18,10 @@ class CustomerDetailFragment : BaseFragment<FragmentCustomerDetailBinding>(
 
     private val customerDetailViewModel by viewModels<CustomerDetailViewModel>()
     private val safeVarargs by navArgs<CustomerDetailFragmentArgs>()
-
     private var customer = Customer()
 
     override fun initView() {
         super.initView()
-
         customerDetailViewModel.getCustomerDetail(
             customerId = safeVarargs.customerId
         )
@@ -42,7 +40,7 @@ class CustomerDetailFragment : BaseFragment<FragmentCustomerDetailBinding>(
         }
 
         binding.customerEdit.setOnClickListener {
-            CustomerDetailRoute.goToCustomerEdit(this)
+            CustomerDetailRoute.goToCustomerEdit(this,customer.id)
         }
 
         binding.avatar.setOnClickListener {
@@ -55,7 +53,6 @@ class CustomerDetailFragment : BaseFragment<FragmentCustomerDetailBinding>(
 
     override fun observerData() {
         super.observerData()
-
         customerDetailViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
                 LoadingDialog.showLoading(requireContext())
@@ -63,7 +60,9 @@ class CustomerDetailFragment : BaseFragment<FragmentCustomerDetailBinding>(
                 LoadingDialog.hide()
             }
         }
-
+        customerDetailViewModel.isDelete.observe(viewLifecycleOwner) { isDelete ->
+            CustomerDetailRoute.backScreen(this)
+        }
         customerDetailViewModel.customer.observe(viewLifecycleOwner) { customer ->
             this.customer = customer
             binding.name.text = customer.name
@@ -81,3 +80,4 @@ class CustomerDetailFragment : BaseFragment<FragmentCustomerDetailBinding>(
         }
     }
 }
+

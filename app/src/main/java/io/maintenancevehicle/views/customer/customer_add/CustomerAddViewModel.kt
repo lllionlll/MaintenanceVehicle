@@ -18,6 +18,7 @@ class CustomerAddViewModel @Inject constructor(
 ) : ViewModel() {
 
     val isLoading = MutableLiveData<Boolean>()
+    val isAdd = MutableLiveData<Boolean>()
 
     fun addCustomer(customer: Customer) {
         viewModelScope.launch {
@@ -31,7 +32,7 @@ class CustomerAddViewModel @Inject constructor(
                     )
                 }
                 if (addCustomerResult is DataResult.Success) {
-
+                    isAdd.value = true
                 }
                 isLoading.value = false
             } catch (e: Exception) {

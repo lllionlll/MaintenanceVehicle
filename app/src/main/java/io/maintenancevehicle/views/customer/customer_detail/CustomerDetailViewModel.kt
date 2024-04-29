@@ -1,5 +1,6 @@
 package io.maintenancevehicle.views.customer.customer_detail
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,12 +13,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+private const val TAG = "CustomerDetailViewModel"
 @HiltViewModel
 class CustomerDetailViewModel @Inject constructor(
     private val maintenanceVehicleRepository: MaintenanceVehicleRepository
 ) : ViewModel() {
 
     val isLoading = MutableLiveData<Boolean>()
+    val isDelete = MutableLiveData<Boolean>()
     val customer = MutableLiveData<Customer>()
 
     fun getCustomerDetail(customerId: String) {
@@ -44,6 +47,7 @@ class CustomerDetailViewModel @Inject constructor(
     fun deleteCustomer(customerId: String) {
         viewModelScope.launch {
             try {
+                isLoading.value = true
                 val deleteCustomerResult = withContext(Dispatchers.IO) {
                     maintenanceVehicleRepository.deleteData(
                         "customers",
@@ -51,9 +55,12 @@ class CustomerDetailViewModel @Inject constructor(
                     )
                 }
                 if (deleteCustomerResult is DataResult.Success) {
-
+                    Log.e(TAG, "deleteCustomer: ", )
+                    isDelete.value = true
                 }
+                isLoading.value = false
             } catch (e: Exception) {
+                isLoading.value = false
 
             }
         }

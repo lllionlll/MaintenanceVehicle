@@ -75,14 +75,6 @@ class CustomerAddFragment : BaseFragment<FragmentCustomerAddBinding>(
             }
         }
         binding.btnSave.setOnClickListener {
-            customerAddViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-                if (isLoading) {
-                    LoadingDialog.showLoading(requireContext())
-                } else {
-                    LoadingDialog.hide()
-                    CustomerAddRoute.backScreen(this)
-                }
-            }
             customer.birthday = binding.birthday.text.toString()
             customer.name = binding.name.text.toString()
             customer.createdAt = binding.dayCreate.text.toString()
@@ -98,35 +90,50 @@ class CustomerAddFragment : BaseFragment<FragmentCustomerAddBinding>(
             galleryLauncher.launch("image/*")
         }
 
-        fun check(): Boolean {
-            var checkField = true;
-            binding.apply {
-                if (name.text.isEmpty()) {
-                    name.error = "Vui lòng nhập tên!"
-                    checkField = false
-                }
-                if (address.text.isEmpty()) {
-                    address.error = "Vui lòng nhập địa chỉ!"
-                    checkField = false
-                }
-                if (phone.text.isEmpty()) {
-                    phone.error = "Vui lòng điền số điện thoại!"
-                    checkField = false
-                }
-                if (birthday.text.isEmpty()) {
-                    birthday.error = "Vui lòng chọn ngày sinh!"
-                    return false
-                }
-                if (dayCreate.text.isEmpty()) {
-                    dayCreate.error = "Vui lòng chọn ngày tạo!"
-                    return false
-                }
-                if (dayUpdate.text.isEmpty()) {
-                    dayUpdate.error = "Vui lòng chọn ngày cập nhật!"
-                    return false
-                }
+    }
+
+    override fun observerData() {
+        super.observerData()
+        customerAddViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                LoadingDialog.showLoading(requireContext())
+            } else {
+                LoadingDialog.hide()
             }
-            return checkField
         }
+        customerAddViewModel.isAdd.observe(viewLifecycleOwner) { isAdd ->
+            CustomerAddRoute.backScreen(this)
+        }
+    }
+
+    fun check(): Boolean {
+        var checkField = true;
+        binding.apply {
+            if (name.text.isEmpty()) {
+                name.error = "Vui lòng nhập tên!"
+                checkField = false
+            }
+            if (address.text.isEmpty()) {
+                address.error = "Vui lòng nhập địa chỉ!"
+                checkField = false
+            }
+            if (phone.text.isEmpty()) {
+                phone.error = "Vui lòng điền số điện thoại!"
+                checkField = false
+            }
+            if (birthday.text.isEmpty()) {
+                birthday.error = "Vui lòng chọn ngày sinh!"
+                return false
+            }
+            if (dayCreate.text.isEmpty()) {
+                dayCreate.error = "Vui lòng chọn ngày tạo!"
+                return false
+            }
+            if (dayUpdate.text.isEmpty()) {
+                dayUpdate.error = "Vui lòng chọn ngày cập nhật!"
+                return false
+            }
+        }
+        return checkField
     }
 }

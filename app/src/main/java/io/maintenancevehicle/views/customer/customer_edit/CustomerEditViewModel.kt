@@ -1,5 +1,6 @@
 package io.maintenancevehicle.views.customer.customer_edit
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +16,30 @@ import javax.inject.Inject
 class CustomerEditViewModel @Inject constructor(
     private val maintenanceVehicleRepository: MaintenanceVehicleRepository
 ) : ViewModel() {
+    val isLoading = MutableLiveData<Boolean>()
+    val isEdit = MutableLiveData<Boolean>()
+    val customer = MutableLiveData<Customer>()
+
+    fun getCustomerDetail(customerId: String) {
+        viewModelScope.launch {
+            try {
+                isLoading.value = true
+                val getCustomerDetailResult = withContext(Dispatchers.IO) {
+                    maintenanceVehicleRepository.getDetailById<Customer>(
+                        ref = "customers",
+                        id = customerId
+                    )
+                }
+                if (getCustomerDetailResult is DataResult.Success) {
+                    val customerData = getCustomerDetailResult.data
+                    customer.value = customerData
+                }
+                isLoading.value = false
+            } catch (e: Exception) {
+                isLoading.value = false
+            }
+        }
+    }
 
     fun editCustomer(customer: Customer) {
         viewModelScope.launch {
@@ -27,7 +52,7 @@ class CustomerEditViewModel @Inject constructor(
                     )
                 }
                 if (editCustomerResult is DataResult.Success) {
-
+                    isEdit.value = true
                 }
             } catch (e: Exception) {
 
