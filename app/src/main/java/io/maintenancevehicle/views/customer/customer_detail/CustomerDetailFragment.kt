@@ -8,6 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.maintenancevehicle.bases.BaseFragment
 import io.maintenancevehicle.data.model.Customer
 import io.maintenancevehicle.databinding.FragmentCustomerDetailBinding
+import io.maintenancevehicle.utils.ConfirmDialog
 import io.maintenancevehicle.utils.LoadingDialog
 import io.maintenancevehicle.views.customer.customer_management.CustomerManagementRoute
 
@@ -36,14 +37,19 @@ class CustomerDetailFragment : BaseFragment<FragmentCustomerDetailBinding>(
         }
 
         binding.customerDelete.setOnClickListener {
-            customerDetailViewModel.deleteCustomer(
-                customerId = customer.id
+            ConfirmDialog.show(
+                requireContext(),
+                onConfirm = {
+                    customerDetailViewModel.deleteCustomer(
+                        customerId = customer.id
+                    )
+                    CustomerDetailRoute.backScreen(this)
+                }
             )
-
         }
 
         binding.customerEdit.setOnClickListener {
-            CustomerDetailRoute.goToCustomerEdit(this)
+            CustomerDetailRoute.goToCustomerEdit(this, customer.id)
         }
 
         binding.avatar.setOnClickListener {

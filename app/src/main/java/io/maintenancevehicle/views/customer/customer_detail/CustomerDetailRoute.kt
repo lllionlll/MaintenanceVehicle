@@ -9,9 +9,11 @@ object CustomerDetailRoute {
         fragment.findNavController().popBackStack()
     }
 
-    fun goToCustomerEdit(fragment: Fragment) {
+    fun goToCustomerEdit(fragment: Fragment, customerId: String) {
         val action =
-            CustomerDetailFragmentDirections.actionCustomerDetailFragmentToCustomerEditFragment()
+            CustomerDetailFragmentDirections.actionCustomerDetailFragmentToCustomerEditFragment(
+                customerId = customerId
+            )
         fragment.findNavController().navigate(action)
     }
 

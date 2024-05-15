@@ -2,6 +2,7 @@ package io.maintenancevehicle.di
 
 import android.content.Context
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,9 +30,10 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideMaintenanceVehicleRepository(
-        firebaseFireStore: FirebaseFirestore
+        firebaseFireStore: FirebaseFirestore,
+        firebaseStorage: FirebaseStorage
     ): MaintenanceVehicleRepository {
-        return MaintenanceVehicleRepository(firebaseFireStore)
+        return MaintenanceVehicleRepository(firebaseFireStore, firebaseStorage)
     }
 
 }
@@ -44,5 +46,11 @@ class FirebaseModule {
     @Provides
     fun provideFirebaseFireStore(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFirebaseStorage(): FirebaseStorage {
+        return FirebaseStorage.getInstance()
     }
 }

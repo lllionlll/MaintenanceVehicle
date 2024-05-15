@@ -69,7 +69,12 @@
         android:id="@+id/customerEditFragment"
         android:name="io.maintenancevehicle.views.customer.customer_edit.CustomerEditFragment"
         android:label="fragment_customer_edit"
-        tools:layout="@layout/fragment_customer_edit" />
+        tools:layout="@layout/fragment_customer_edit">
+        <argument
+            android:name="customerId"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/customerDetailFragment"
         android:name="io.maintenancevehicle.views.customer.customer_detail.CustomerDetailFragment"
@@ -198,10 +203,10 @@
         android:label="fragment_statistical"
         tools:layout="@layout/fragment_statistical" />
     <fragment
-        tools:layout="@layout/fragment_widget_list"
         android:id="@+id/widgetListFragment"
         android:name="io.maintenancevehicle.views.widget.widget_list.WidgetListFragment"
-        android:label="WidgetListFragment" >
+        android:label="WidgetListFragment"
+        tools:layout="@layout/fragment_widget_list">
         <action
             android:id="@+id/action_widgetListFragment_to_widgetDetailFragment"
             app:destination="@id/widgetDetailFragment" />
@@ -210,12 +215,12 @@
         android:id="@+id/widgetAddFragment"
         android:name="io.maintenancevehicle.views.widget.widget_add.WidgetAddFragment"
         android:label="WidgetAddFragment"
-        tools:layout="@layout/fragment_widget_add"/>
+        tools:layout="@layout/fragment_widget_add" />
     <fragment
-        tools:layout="@layout/fragment_widget_detail"
         android:id="@+id/widgetDetailFragment"
         android:name="io.maintenancevehicle.views.widget.widget_detail.WidgetDetailFragment"
-        android:label="WidgetDetailFragment" >
+        android:label="WidgetDetailFragment"
+        tools:layout="@layout/fragment_widget_detail">
         <action
             android:id="@+id/action_widgetDetailFragment_to_widgetEditFragment"
             app:destination="@id/widgetEditFragment" />
@@ -225,8 +230,8 @@
             app:argType="string" />
     </fragment>
     <fragment
-        tools:layout="@layout/fragment_widget_edit"
         android:id="@+id/widgetEditFragment"
         android:name="io.maintenancevehicle.views.widget.widget_edit.WidgetEditFragment"
-        android:label="WidgetEditFragment" />
+        android:label="WidgetEditFragment"
+        tools:layout="@layout/fragment_widget_edit" />
 </navigation>

@@ -1,47 +1,63 @@
 package io.maintenancevehicle.views.customer.customer_add
 
-
 import android.net.Uri
-import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import io.maintenancevehicle.bases.BaseFragment
 import io.maintenancevehicle.data.model.Customer
 import io.maintenancevehicle.databinding.FragmentCustomerAddBinding
-
 import io.maintenancevehicle.utils.DateFunction
 import io.maintenancevehicle.utils.LoadingDialog
-import io.maintenancevehicle.utils.hideKeyboard
-import java.util.UUID
+import java.util.Date
 
-private const val TAG = "CustomerAddFragment"
 @AndroidEntryPoint
 class CustomerAddFragment : BaseFragment<FragmentCustomerAddBinding>(
     FragmentCustomerAddBinding::inflate
 ) {
     private val customerAddViewModel by viewModels<CustomerAddViewModel>()
-    private var customer = Customer()
-    private val genderList = mutableListOf("Nam", "Nữ", "Khác")
-    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
-        val galleryUri = it
-        try {
-            customer.imageUrl = galleryUri.toString()
-            binding.avatar.setImageURI(galleryUri)
-        } catch (e: Exception) {
-            Log.e(TAG, "${e.message}: ", )
-        }
 
+    private val genderList = mutableListOf("Nam", "Nữ")
+    private var uri: Uri? = null
+
+    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { galleryUri ->
+        if (galleryUri != null) {
+            uri = galleryUri
+            binding.avatar.setImageURI(galleryUri)
+        }
     }
+
     override fun initData() {
         super.initData()
+
         binding.gender.adapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, genderList)
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, genderList)
+    }
+
+    override fun initView() {
+        super.initView()
+
+        Glide.with(requireContext())
+            .load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRNuiBY5AGqRjC890IW9MQ5_p5NYSysbFSBfs8LIcl8DSYx7sTngU8xpzyHuwitNfUmV4&usqp=CAU")
+            .into(binding.avatar)
+    }
+
+    override fun observerData() {
+        super.observerData()
+        customerAddViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                LoadingDialog.showLoading(requireContext())
+            } else {
+                LoadingDialog.hide()
+            }
+        }
+        customerAddViewModel.isAddSuccess.observe(viewLifecycleOwner) { isSuccess ->
+            if (isSuccess) {
+                CustomerAddRoute.backScreen(this)
+            }
+        }
     }
 
     override fun handleEvent() {
@@ -50,7 +66,6 @@ class CustomerAddFragment : BaseFragment<FragmentCustomerAddBinding>(
             CustomerAddRoute.backScreen(this)
         }
         binding.birthday.setOnClickListener {
-            binding.root.hideKeyboard()
             DateFunction.showDatePicker(requireContext()) { date ->
                 binding.birthday.setText(
                     DateFunction.formatDate(
@@ -60,48 +75,30 @@ class CustomerAddFragment : BaseFragment<FragmentCustomerAddBinding>(
                 )
             }
         }
-        binding.dayCreate.setOnClickListener {
-            binding.root.hideKeyboard()
-            DateFunction.showDatePicker(requireContext()) { date ->
-                binding.dayCreate.setText(
-                    DateFunction.formatDate(
-                        date,
-                        "dd/MM/yyyy"
-                    )
-                )
-            }
-        }
-        binding.dayUpdate.setOnClickListener {
-            binding.root.hideKeyboard()
-            DateFunction.showDatePicker(requireContext()) { date ->
-                binding.dayUpdate.setText(
-                    DateFunction.formatDate(
-                        date,
-                        "dd/MM/yyyy"
-                    )
-                )
-            }
-        }
         binding.btnSave.setOnClickListener {
-                customerAddViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-                    if (isLoading) {
-                        LoadingDialog.showLoading(requireContext())
-                    } else {
-                        LoadingDialog.hide()
-                        CustomerAddRoute.backScreen(this)
-                    }
-                }
-                customer.birthday = binding.birthday.text.toString()
-                customer.name = binding.name.text.toString()
-                customer.createdAt = binding.dayCreate.text.toString()
-                customer.updatedAt = binding.dayUpdate.text.toString()
-                customer.gender = genderList[binding.gender.selectedItemPosition]
-                customer.homeTown = binding.address.text.toString()
-                customer.phoneNumber = binding.phone.text.toString()
-                customer.note = binding.note.text.toString()
-                customerAddViewModel.addCustomer(customer)
+            val customer = Customer(
+                birthday = binding.birthday.text.toString(),
+                name = binding.name.text.toString(),
+                createdAt = DateFunction.formatDate(
+                    Date(),
+                    "dd/MM/yyyy"
+                ),
+                updatedAt = DateFunction.formatDate(
+                    Date(),
+                    "dd/MM/yyyy"
+                ),
+                gender = genderList[binding.gender.selectedItemPosition],
+                homeTown = binding.address.text.toString(),
+                phoneNumber = binding.phone.text.toString(),
+                note = binding.note.text.toString()
+            )
+            customerAddViewModel.addCustomer(
+                requireContext(),
+                uri,
+                customer
+            )
+        }
 
-            }
         binding.avatar.setOnClickListener {
             galleryLauncher.launch("image/*")
         }

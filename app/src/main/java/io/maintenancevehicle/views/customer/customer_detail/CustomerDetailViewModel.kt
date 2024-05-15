@@ -40,6 +40,7 @@ class CustomerDetailViewModel @Inject constructor(
             }
         }
     }
+
     fun deleteCustomer(customerId: String) {
         viewModelScope.launch {
             try {
