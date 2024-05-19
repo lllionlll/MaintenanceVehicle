@@ -1,10 +1,20 @@
 package io.maintenancevehicle.data.model
 
-import com.google.firebase.firestore.PropertyName
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.UUID
 
+@Entity("widgets")
 data class Widget(
-    @set:PropertyName("id") @get:PropertyName("id") var id: String = UUID.randomUUID().toString(),
-    @set:PropertyName("name") @get:PropertyName("name") var name: String? = null,
-    @set:PropertyName("image_url") @get:PropertyName("image_url") var image: String? = null
+    @PrimaryKey @ColumnInfo("widget_id") var widgetId: String = UUID.randomUUID().toString(),
+    @ColumnInfo("name") var name: String? = null,
+    @ColumnInfo("image_url") var image: String? = null,
+    @ColumnInfo("brand") var brand: String? = null,
+    @ColumnInfo("color") var color: String? = null,
+    @ColumnInfo("price") var price: Int? = null,
+    @ColumnInfo("count") var count: Int? = null,
+    @ColumnInfo("from") var from: String? = null,
+    @ColumnInfo("created_at") var createdAt: String? = null,
+    @ColumnInfo("updated_at") var updatedAt: String? = null
 )

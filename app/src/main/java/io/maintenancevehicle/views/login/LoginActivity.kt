@@ -8,6 +8,7 @@ import io.maintenancevehicle.MainActivity
 import io.maintenancevehicle.bases.BaseActivity
 import io.maintenancevehicle.databinding.ActivityLoginBinding
 import io.maintenancevehicle.utils.Constants
+import io.maintenancevehicle.utils.LoadingDialog
 import io.maintenancevehicle.utils.SharedPreferences
 
 @AndroidEntryPoint
@@ -19,6 +20,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
 
     override fun observerData() {
         super.observerData()
+
+        loginViewModel.isLoading.observe(this) {
+            if (it) LoadingDialog.showLoading(this) else LoadingDialog.hide()
+        }
+
         loginViewModel.loginFlag.observe(this) { loginFlag ->
             if (loginFlag) {
                 if (binding.savePassword.isChecked) {

@@ -1,9 +1,13 @@
 package io.maintenancevehicle.data.model
 
-import com.google.firebase.firestore.PropertyName
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.util.UUID
 
+@Entity("users")
 data class User(
-    @set:PropertyName("id") @get:PropertyName("id") var id: String? = null,
-    @set:PropertyName("user_name") @get:PropertyName("user_name") var userName: String? = null,
-    @set:PropertyName("password") @get:PropertyName("password") var password: String? = null
+    @PrimaryKey var id: String = UUID.randomUUID().toString(),
+    @ColumnInfo("user_name") var userName: String? = null,
+    @ColumnInfo("password") var password: String? = null
 )

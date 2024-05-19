@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+
     namespace 'io.maintenancevehicle'
     compileSdk 34
 

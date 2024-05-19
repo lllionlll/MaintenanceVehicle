@@ -1,5 +1,40 @@
 <resources>
     <string name="app_name">Bảo dưỡng thiết bị</string>
     <string name="title_activity_splash_view">SplashView</string>
+    <string name="app_bar_menu">MENU</string>
+    <string name="history_maintenance">Lịch sử bảo dưỡng</string>
+    <string name="schedule_maintenance">Kế hoạch bảo dưỡng</string>
+    <string name="maintenance_vehicle">Bảo dưỡng thiết bị</string>
+    <string name="read_data">Nhập dữ liệu</string>
+
+    <string name="notification">THÔNG BÁO</string>
+    <string name="message_confirm_delete">Bạn có muốn xóa các bản ghi đã chọn hay không? Ấn OK để xác nhận xóa.</string>
+    <string name="cancel">Hủy</string>
+    <string name="ok">OK</string>
+
+    <string name="option">Tùy chọn</string>
+    <string name="empty">(Trống)</string>
+    <string name="select">Chọn</string>
+    <string name="file_name">Tên file</string>
+    <string name="export">Xuất</string>
+
+    <string name="search">Tìm kiếm</string>
+    <string name="search_sub">Tìm</string>
+    <string name="filter">Lọc</string>
+    <string name="reset">Reset</string>
+    <string name="sort">Sắp xếp</string>
+
+    <string name="vehicle_id">Mã thiết bị</string>
+    <string name="status">Trạng thái</string>
+    <string name="reason">Nguyên nhân</string>
+    <string name="solution">Nội dung xử lý</string>
+    <string name="supervisor">Người giám sát</string>
+    <string name="note">Ghi chú</string>
+    <string name="save">Lưu</string>
+    <string name="periodic_maintenance">Bảo dưỡng định kỳ</string>
+    <string name="maintenance">Bảo trì</string>
+    <string name="qr_code_scanner">QR Code Scanner</string>
+
+    <string name="created_at">Ngày tạo</string>
 
 </resources>

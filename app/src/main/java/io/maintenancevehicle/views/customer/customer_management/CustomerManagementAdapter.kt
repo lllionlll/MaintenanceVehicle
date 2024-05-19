@@ -24,7 +24,7 @@ class CustomerManagementAdapter(
             binding.customerName.text = item.name
 
             binding.phoneNumber.text = ""
-            binding.phoneNumber.text = item.phoneNumber
+            binding.phoneNumber.text = item.customerId
 
             Glide.with(binding.imgCustomer.context)
                 .load(item.imageUrl)

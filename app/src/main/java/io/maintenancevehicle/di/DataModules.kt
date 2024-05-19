@@ -1,14 +1,15 @@
 package io.maintenancevehicle.di
 
 import android.content.Context
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.maintenancevehicle.data.source.local.MaintenanceVehicleDatabase
 import io.maintenancevehicle.data.repository.MaintenanceVehicleRepository
+import io.maintenancevehicle.data.source.local.MaintenanceVehicleDataSource
 import javax.inject.Singleton
 
 @Module
@@ -25,32 +26,43 @@ object AppModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
+object DataSourceModule {
 
     @Singleton
     @Provides
-    fun provideMaintenanceVehicleRepository(
-        firebaseFireStore: FirebaseFirestore,
-        firebaseStorage: FirebaseStorage
-    ): MaintenanceVehicleRepository {
-        return MaintenanceVehicleRepository(firebaseFireStore, firebaseStorage)
+    fun provideMaintenanceVehicleLocalDataSource(
+        maintenanceVehicleDatabase: MaintenanceVehicleDatabase
+    ): MaintenanceVehicleDataSource {
+        return MaintenanceVehicleDataSource(maintenanceVehicleDatabase.maintenanceVehicleDao())
     }
 
 }
 
 @Module
 @InstallIn(SingletonComponent::class)
-class FirebaseModule {
+object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideFirebaseFireStore(): FirebaseFirestore {
-        return FirebaseFirestore.getInstance()
+    fun provideMaintenanceVehicleRepository(
+        maintenanceVehicleDataSource: MaintenanceVehicleDataSource
+    ): MaintenanceVehicleRepository {
+        return MaintenanceVehicleRepository(maintenanceVehicleDataSource)
     }
 
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object DatabaseModule {
+
     @Singleton
     @Provides
-    fun provideFirebaseStorage(): FirebaseStorage {
-        return FirebaseStorage.getInstance()
+    fun provideDataBase(@ApplicationContext context: Context): MaintenanceVehicleDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            MaintenanceVehicleDatabase::class.java,
+            "maintenance_vehicle.db"
+        ).build()
     }
 }

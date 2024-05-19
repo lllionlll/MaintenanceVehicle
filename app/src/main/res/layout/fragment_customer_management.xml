@@ -31,12 +31,79 @@
             android:textSize="18sp" />
 
         <ImageView
-            android:visibility="invisible"
             android:id="@+id/btnControl"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingHorizontal="16dp"
-            android:src="@drawable/ic_edit" />
+            android:src="@drawable/ic_control" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutControl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/layoutAppbar"
+        android:paddingBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/txtSearch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text"
+                android:hint="@string/search"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/btnReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="8dp"
+                android:background="@drawable/bg_corner_primay"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:text="@string/reset"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/btnSearch"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_corner_primay"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:text="@string/search_sub"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -49,7 +116,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutAppbar" />
+        app:layout_constraintTop_toBottomOf="@+id/layoutControl" />
 
     <ImageView
         android:id="@+id/addCustomer"

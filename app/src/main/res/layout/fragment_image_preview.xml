@@ -8,6 +8,7 @@
 
     <ImageView
         android:id="@+id/close"
+        app:tint="@color/black"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_width="42dp"

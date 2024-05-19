@@ -4,19 +4,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.maintenancevehicle.data.model.User
 import io.maintenancevehicle.data.repository.MaintenanceVehicleRepository
-import io.maintenancevehicle.data.DataResult
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val maintenanceVehicleRepository: MaintenanceVehicleRepository
-): ViewModel() {
+) : ViewModel() {
 
     val isLoading = MutableLiveData<Boolean>()
     val loginFlag = MutableLiveData<Boolean>()
@@ -25,13 +23,15 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 isLoading.value = true
-                val loginResult = withContext(Dispatchers.IO) {
-                    maintenanceVehicleRepository.getDetailById<User>(
-                        ref = "users",
-                        id = userName + password
+                val user = withContext(Dispatchers.IO) {
+                    maintenanceVehicleRepository.getUser(
+                        userName,
+                        password
                     )
                 }
-                loginFlag.value = loginResult is DataResult.Success
+                val randomDelay = (100..500).random().toLong()
+                delay(randomDelay)
+                loginFlag.value = user != null
                 isLoading.value = false
             } catch (e: Exception) {
                 isLoading.value = false

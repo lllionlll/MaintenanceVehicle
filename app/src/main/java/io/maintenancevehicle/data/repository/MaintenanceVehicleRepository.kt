@@ -1,174 +1,113 @@
 package io.maintenancevehicle.data.repository
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
-import com.google.android.gms.tasks.Tasks
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
-import io.maintenancevehicle.data.ApiException
-import io.maintenancevehicle.data.ApiSuccess
-import io.maintenancevehicle.data.DataResult
-import io.maintenancevehicle.data.handleFirebaseTask
-import java.io.ByteArrayOutputStream
+import io.maintenancevehicle.data.model.Customer
+import io.maintenancevehicle.data.model.Service
+import io.maintenancevehicle.data.model.User
+import io.maintenancevehicle.data.model.History
+import io.maintenancevehicle.data.model.Vehicle
+import io.maintenancevehicle.data.model.Widget
+import io.maintenancevehicle.data.source.local.MaintenanceVehicleDataSource
 import javax.inject.Inject
 
 class MaintenanceVehicleRepository @Inject constructor(
-    private val firebaseFirestore: FirebaseFirestore,
-    private val firebaseStorage: FirebaseStorage
+    private val maintenanceVehicleDataSource: MaintenanceVehicleDataSource
 ) {
 
-    @Suppress("NON_PUBLIC_CALL_FROM_PUBLIC_INLINE")
-    inline fun <reified T> getList(ref: String): DataResult<MutableList<T>> {
-        return try {
-            val collectionRef = firebaseFirestore.collection(ref)
-            val querySnapshot = collectionRef.get()
-
-            when (val handleFirebaseResult = handleFirebaseTask(querySnapshot)) {
-                is ApiSuccess -> {
-                    val dataList = handleFirebaseResult.data.toObjects(T::class.java)
-                    DataResult.Success(dataList)
-                }
-
-                is ApiException -> {
-                    val message = handleFirebaseResult.e.message
-                    DataResult.Error(message = message)
-                }
-
-                else -> {
-                    DataResult.Error()
-                }
-            }
-        } catch (e: Exception) {
-            DataResult.Error(message = e.message)
-        }
+    // User
+    suspend fun saveUser(userList: List<User>) {
+        maintenanceVehicleDataSource.saveUsers(userList)
     }
 
-    @Suppress("NON_PUBLIC_CALL_FROM_PUBLIC_INLINE")
-    inline fun <reified T> getDetailById(
-        ref: String,
-        id: String
-    ): DataResult<T> {
-        return try {
-            val getList = firebaseFirestore.collection(ref)
-                .whereEqualTo("id", id)
-                .get()
-
-            when (val handleFirebaseResult = handleFirebaseTask(getList)) {
-
-                is ApiSuccess -> {
-                    val list = handleFirebaseResult.data.toObjects(T::class.java)
-                    DataResult.Success(list.first())
-                }
-
-                is ApiException -> {
-                    val message = handleFirebaseResult.e.message
-                    DataResult.Error(message = message)
-                }
-
-                else -> {
-                    DataResult.Error()
-                }
-            }
-        } catch (e: Exception) {
-            DataResult.Error(message = e.message)
-        }
+    suspend fun getUser(userName: String, password: String): User? {
+        return maintenanceVehicleDataSource.getUsers(userName, password)
     }
 
-    fun addData(ref: String, data: Any, id: String): DataResult<Boolean> {
-        return try {
-            val collectionRef = firebaseFirestore.collection(ref)
-            val querySnapshot = collectionRef.document(
-                id
-            ).set(data)
-
-            when (val handleFirebaseResult = handleFirebaseTask(querySnapshot)) {
-                is ApiSuccess -> {
-                    DataResult.Success(true)
-                }
-
-                is ApiException -> {
-                    val message = handleFirebaseResult.e.message
-                    DataResult.Error(message = message)
-                }
-
-                else -> {
-                    DataResult.Error()
-                }
-            }
-        } catch (e: Exception) {
-            DataResult.Error(message = e.message)
-        }
+    suspend fun deleteUser() {
+        maintenanceVehicleDataSource.deleteUsers()
     }
 
-    fun deleteData(ref: String, id: String) : DataResult<Any> {
-        return try {
-            val collectionRef = firebaseFirestore.collection(ref)
-            val querySnapshot = collectionRef.document(
-                id
-            ).delete()
-
-            when (val handleFirebaseResult = handleFirebaseTask(querySnapshot)) {
-                is ApiSuccess -> {
-                    DataResult.Success(true)
-                }
-
-                is ApiException -> {
-                    val message = handleFirebaseResult.e.message
-                    DataResult.Error(message = message)
-                }
-
-                else -> {
-                    DataResult.Error()
-                }
-            }
-        } catch (e: Exception) {
-            DataResult.Error(message = e.message)
-        }
+    // Customer
+    suspend fun saveCustomers(customerList: List<Customer>) {
+        maintenanceVehicleDataSource.saveCustomers(customerList)
     }
 
-    fun uploadImage(context: Context, uri: Uri): DataResult<String> {
-        return try {
-            val newUri = compressImage(context, uri)
-            val ref = firebaseStorage.reference.child("images/${uri.lastPathSegment}")
-            val uploadTask = ref.putBytes(newUri)
-            val urlTask = uploadTask.continueWithTask {
-                ref.downloadUrl
-            }
-
-            when (val handleFirebaseResult = handleFirebaseTask(urlTask)) {
-                is ApiSuccess -> {
-                    val url = handleFirebaseResult.data
-                    DataResult.Success(url.toString())
-                }
-
-                is ApiException -> {
-                    val message = handleFirebaseResult.e.message
-                    DataResult.Error(message = message)
-                }
-
-                else -> {
-                    DataResult.Error()
-                }
-            }
-
-        } catch (e: Exception) {
-            DataResult.Error(message = e.message)
-        }
+    suspend fun getCustomers(): List<Customer> {
+        return maintenanceVehicleDataSource.getCustomers()
     }
 
-    private fun compressImage(context: Context, uri: Uri): ByteArray {
-        val input = context.contentResolver.openInputStream(uri)
-        val options = BitmapFactory.Options()
-        options.inSampleSize = 4
-        val bitmap = BitmapFactory.decodeStream(input, null, options)
-        input?.close()
-        val outputStream = ByteArrayOutputStream()
-        bitmap?.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
-        val byteArray = outputStream.toByteArray()
-        outputStream.close()
-        return byteArray
+    suspend fun getCustomerById(customerId: String): Customer? {
+        return maintenanceVehicleDataSource.getCustomerById(customerId)
+    }
+
+    suspend fun deleteCustomers(customerIdList: List<String>) {
+        return maintenanceVehicleDataSource.deleteCustomers(customerIdList)
+    }
+
+    // History
+    suspend fun saveHistories(historyList: List<History>) {
+        maintenanceVehicleDataSource.saveHistories(historyList)
+    }
+
+    suspend fun getHistories(): List<History> {
+        return maintenanceVehicleDataSource.getHistories()
+    }
+
+    suspend fun deleteHistories(vehicleIdList: List<String>) {
+        return maintenanceVehicleDataSource.deleteHistories(vehicleIdList)
+    }
+
+    // Service
+
+    suspend fun saveServices(serviceList: List<Service>) {
+        maintenanceVehicleDataSource.saveServices(serviceList)
+    }
+
+    suspend fun getServices(): List<Service> {
+        return maintenanceVehicleDataSource.getServices()
+    }
+
+    suspend fun getServiceById(serviceId: String): Service? {
+        return maintenanceVehicleDataSource.getServiceById(serviceId)
+    }
+
+    suspend fun deleteServices(serviceIdList: List<String>) {
+        return maintenanceVehicleDataSource.deleteServices(serviceIdList)
+    }
+
+    // Vehicle
+
+    suspend fun saveVehicles(vehicleList: List<Vehicle>) {
+        maintenanceVehicleDataSource.saveVehicles(vehicleList)
+    }
+
+    suspend fun getVehicles(): List<Vehicle> {
+        return maintenanceVehicleDataSource.getVehicles()
+    }
+
+    suspend fun getVehicleById(vehicleId: String): Vehicle? {
+        return maintenanceVehicleDataSource.getVehicleById(vehicleId)
+    }
+
+    suspend fun deleteVehicles(vehicleIdList: List<String>) {
+        return maintenanceVehicleDataSource.deleteVehicles(vehicleIdList)
+    }
+
+    // Widget
+
+    suspend fun saveWidgets(widgetList: List<Widget>) {
+        maintenanceVehicleDataSource.saveWidgets(widgetList)
+    }
+
+    suspend fun getWidgets(): List<Widget> {
+        return maintenanceVehicleDataSource.getWidgets()
+    }
+
+    suspend fun getWidgetById(widgetId: String): Widget? {
+        return maintenanceVehicleDataSource.getWidgetById(widgetId)
+    }
+
+    suspend fun deleteWidgets(widgetIdList: List<String>) {
+        return maintenanceVehicleDataSource.deleteWidgets(widgetIdList)
     }
 
 }

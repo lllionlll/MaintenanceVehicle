@@ -2,12 +2,11 @@ package io.maintenancevehicle.utils
 
 import android.content.Context
 import android.net.Uri
-import org.apache.poi.ss.usermodel.Cell
+import androidx.documentfile.provider.DocumentFile
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import java.io.File
-import java.io.FileOutputStream
+import kotlin.math.max
 
 object ExcelFunction {
 
@@ -27,7 +26,17 @@ object ExcelFunction {
                         if (cell == null || cell.cellType == CellType.BLANK) {
                             rowData.add("")
                         } else {
-                            rowData.add(cell.toString())
+                            if (columnIndex == 5) {
+                                val dateValue = cell.dateCellValue
+                                rowData.add(
+                                    DateFunction.formatDate(
+                                        date = dateValue,
+                                        formatType = Constants.FORMAT1
+                                    )
+                                )
+                            } else {
+                                rowData.add(cell.toString())
+                            }
                         }
                     }
                     result.add(rowData)
@@ -40,28 +49,53 @@ object ExcelFunction {
         return result
     }
 
-    fun exportToExcel(data: List<List<Any>>, filePath: String) {
+    fun exportToExcel(
+        context: Context, data: List<List<Any>>,
+        fileName: String,
+        uri: Uri
+    ) {
+        val maxWidth = mutableListOf(0, 0, 0, 0, 0, 0, 0)
         val workbook = XSSFWorkbook()
         val sheet = workbook.createSheet("Sheet1")
-
-        for ((rowCount, rowData) in data.withIndex()) {
-            val row: Row = sheet.createRow(rowCount)
-            for ((columnCount, cellData) in rowData.withIndex()) {
-                val cell: Cell = row.createCell(columnCount)
-                cell.setCellValue(cellData.toString())
+        for ((rowIndex, rowData) in data.withIndex()) {
+            val row: Row = sheet.createRow(rowIndex)
+            for ((columnIndex, cellData) in rowData.withIndex()) {
+                val cell = row.createCell(columnIndex)
+                if (columnIndex == 6 && cellData.toString() != "Ghi chú" && cellData.toString()
+                        .isNotEmpty()
+                ) {
+                    cell.setCellValue("${cellData}(${data[rowIndex][0]})")
+                } else {
+                    if (columnIndex == 5 && cellData.toString() != "Ngày tạo") {
+                        val cellStyle = workbook.createCellStyle()
+                        cellStyle.dataFormat = 22
+                        cell.setCellValue(
+                            DateFunction.formatDate(
+                                dateString = cellData.toString(),
+                                formatType = Constants.FORMAT1
+                            )
+                        )
+                        cell.cellStyle = cellStyle
+                    } else {
+                        cell.setCellValue(cellData.toString())
+                    }
+                }
+                maxWidth[columnIndex] = max(cellData.toString().length, maxWidth[columnIndex])
+                sheet.setColumnWidth(columnIndex, 256 * (maxWidth[columnIndex] + 2))
             }
         }
 
         try {
-            val dir = File(filePath)
-            if (!dir.exists()) {
-                dir.mkdirs()
+            val directory = DocumentFile.fromTreeUri(context, uri)
+            val fileNameExcel = "$fileName.xlsx"
+            val mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+            directory?.createFile(mimeType, fileNameExcel)?.let { documentFile ->
+                val outputStream = context.contentResolver.openOutputStream(documentFile.uri)
+                outputStream?.use { stream ->
+                    workbook.write(stream)
+                }
             }
-            val fileName = "${DateFunction.getCurrentDate().time}.xlsx"
-            val file = File(dir, fileName)
-            val outputStream = FileOutputStream(file)
-            workbook.write(outputStream)
-            outputStream.close()
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -5,56 +5,117 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/layoutAppbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?colorPrimary"
+    <FrameLayout
+        android:id="@+id/appBar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
 
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingHorizontal="16dp"
-            android:src="@drawable/ic_back" />
+        <LinearLayout
+            android:id="@+id/layoutAppbar1"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="Lịch sử bảo dưỡng"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="16dp"
+                android:src="@drawable/ic_back" />
 
-        <ImageView
-            android:id="@+id/btnSave"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingHorizontal="16dp"
-            android:src="@drawable/ic_save" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="@string/history_maintenance"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
-        <ImageView
-            android:id="@+id/btnControl"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingHorizontal="16dp"
-            android:src="@drawable/ic_control" />
+            <ImageView
+                android:id="@+id/btnSave"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="16dp"
+                android:src="@drawable/ic_save" />
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/btnControl"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="16dp"
+                android:src="@drawable/ic_control" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/layoutAppbar2"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/btnClose"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="16dp"
+                android:src="@drawable/ic_close" />
+
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/btnCloseTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="16dp"
+                android:src="@drawable/ic_close" />
+
+            <TextView
+                android:id="@+id/txtSelected"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="Đã chọn (0)"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/btnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="16dp"
+                android:src="@drawable/ic_delete" />
+
+            <ImageView
+                android:id="@+id/btnSelectAll"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="16dp"
+                android:src="@drawable/ic_select_all" />
+
+        </LinearLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/layoutControl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/appBar"
         android:paddingBottom="8dp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutAppbar"
+
         tools:visibility="visible">
 
         <LinearLayout
@@ -70,12 +131,24 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/bg_edit_text"
-                android:hint="Tìm kiếm"
+                android:hint="@string/search"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="12dp"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
+
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:src="@drawable/ic_qr_code"
+                app:tint="?colorPrimary"
+                android:id="@+id/qrCodeScanner"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
 
             <Space
                 android:layout_width="16dp"
@@ -88,7 +161,7 @@
                 android:background="@drawable/bg_corner_primay"
                 android:gravity="center"
                 android:paddingHorizontal="16dp"
-                android:text="Reset"
+                android:text="@string/search_sub"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -103,14 +176,15 @@
             android:orientation="vertical">
 
             <EditText
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
                 android:id="@+id/dateStart"
+                android:singleLine="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/bg_edit_text"
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="--/--/----"
                 android:maxLines="1"
@@ -137,19 +211,59 @@
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/btnFilter"
-                android:layout_marginTop="8dp"
-                android:paddingVertical="8dp"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_corner_primay"
-                android:gravity="center"
-                android:paddingHorizontal="16dp"
-                android:text="Lọc"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
 
+                <TextView
+                    android:id="@+id/btnReset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:background="@drawable/bg_corner_primay"
+                    android:gravity="center"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/reset"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <Space
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"/>
+
+                <TextView
+                    android:id="@+id/btnSort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:background="@drawable/bg_corner_primay"
+                    android:gravity="center"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/sort"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <Space
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"/>
+
+                <TextView
+                    android:id="@+id/btnFilter"
+                    android:paddingVertical="8dp"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_corner_primay"
+                    android:gravity="center"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/filter"
+                    android:layout_gravity="end"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
         </LinearLayout>
 

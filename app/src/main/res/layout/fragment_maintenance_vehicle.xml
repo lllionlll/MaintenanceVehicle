@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -22,20 +21,20 @@
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="Bảo dưỡng"
+            android:text="@string/maintenance_vehicle"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
         <ImageView
-            android:visibility="invisible"
+            android:id="@+id/btnControl"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingHorizontal="16dp"
-            android:src="@drawable/ic_edit" />
+            android:src="@drawable/ic_qr_code" />
 
     </LinearLayout>
 
@@ -60,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="4dp"
-                android:text="Biển số xe"
+                android:text="@string/vehicle_id"
                 android:textColor="?colorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -83,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="Loại xe"
+                android:text="@string/status"
                 android:textColor="?colorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -104,7 +103,7 @@
                     android:buttonTint="?colorPrimary"
                     android:checked="true"
                     android:hapticFeedbackEnabled="false"
-                    android:text="Xe máy" />
+                    android:text="@string/periodic_maintenance" />
 
                 <RadioButton
                     android:id="@+id/status2"
@@ -114,8 +113,7 @@
                     android:background="@android:color/transparent"
                     android:buttonTint="?colorPrimary"
                     android:hapticFeedbackEnabled="false"
-                    android:text="Ô tô" />
-
+                    android:text="@string/maintenance" />
 
             </RadioGroup>
 
@@ -123,7 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="Nguyên nhân"
+                android:text="@string/reason"
                 android:textColor="?colorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -146,7 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="Nội dung bảo dưỡng"
+                android:text="@string/solution"
                 android:textColor="?colorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -170,7 +168,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="Người bảo dưỡng"
+                android:text="@string/supervisor"
                 android:textColor="?colorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -193,7 +191,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="Ghi chú"
+                android:text="@string/note"
                 android:textColor="?colorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -205,7 +203,6 @@
                 android:background="@drawable/bg_edit_text"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="12dp"
-                android:lines="3"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -227,7 +224,7 @@
         android:background="@drawable/bg_corner_primay"
         android:gravity="center"
         android:paddingVertical="12dp"
-        android:text="Lưu thiết bị"
+        android:text="@string/save"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

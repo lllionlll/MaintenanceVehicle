@@ -34,20 +34,25 @@
         <action
             android:id="@+id/action_menuFragment_to_widgetListFragment"
             app:destination="@id/widgetListFragment" />
-        <action
-            android:id="@+id/action_menuFragment_to_widgetAddFragment"
-            app:destination="@id/widgetAddFragment" />
     </fragment>
     <fragment
         android:id="@+id/historyMaintenanceVehicleFragment"
-        android:name="io.maintenancevehicle.views.maintenance_vehicle_view.history_maintenance.HistoryMaintenanceFragment"
+        android:name="io.maintenancevehicle.views.history.history_maintenance.HistoryMaintenanceFragment"
         android:label="HistoryMaintenanceVehicleFragment"
-        tools:layout="@layout/fragment_history_maintenance" />
+        tools:layout="@layout/fragment_history_maintenance">
+        <action
+            android:id="@+id/action_historyMaintenanceVehicleFragment_to_qrCodeScannerFragment"
+            app:destination="@id/qrCodeScannerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/maintenanceVehicleListFragment"
-        android:name="io.maintenancevehicle.views.maintenance_vehicle_view.maintenance_vehicle.MaintenanceVehicleFragment"
+        android:name="io.maintenancevehicle.views.history.maintenance_vehicle.MaintenanceVehicleFragment"
         android:label="MaintenanceVehicleListFragment"
-        tools:layout="@layout/fragment_maintenance_vehicle" />
+        tools:layout="@layout/fragment_maintenance_vehicle">
+        <action
+            android:id="@+id/action_maintenanceVehicleListFragment_to_qrCodeScannerFragment"
+            app:destination="@id/qrCodeScannerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/customerManagementFragment"
         android:name="io.maintenancevehicle.views.customer.customer_management.CustomerManagementFragment"
@@ -112,7 +117,14 @@
         android:id="@+id/serviceEditFragment"
         android:name="io.maintenancevehicle.views.service.service_edit.ServiceEditFragment"
         android:label="fragment_service_edit"
-        tools:layout="@layout/fragment_service_edit" />
+        tools:layout="@layout/fragment_service_edit">
+
+        <argument
+            android:name="serviceId"
+            android:defaultValue=""
+            app:argType="string" />
+
+    </fragment>
     <fragment
         android:id="@+id/serviceDetailFragment"
         android:name="io.maintenancevehicle.views.service.service_detail.ServiceDetailFragment"
@@ -128,60 +140,38 @@
     </fragment>
     <fragment
         android:id="@+id/scheduleFragment"
-        android:name="io.maintenancevehicle.views.schedule_view.schedule.ScheduleFragment"
+        android:name="io.maintenancevehicle.views.schedule.ScheduleFragment"
         android:label="ScheduleFragment"
         tools:layout="@layout/fragment_schedule">
         <action
-            android:id="@+id/action_scheduleFragment_to_scheduleDetailFragment"
-            app:destination="@id/scheduleDetailFragment" />
-        <action
-            android:id="@+id/action_scheduleFragment_to_scheduleAddFragment"
-            app:destination="@id/scheduleAddFragment" />
+            android:id="@+id/action_scheduleFragment_to_qrCodeScannerFragment"
+            app:destination="@id/qrCodeScannerFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/scheduleAddFragment"
-        android:name="io.maintenancevehicle.views.schedule_view.schedule_add.ScheduleAddFragment"
-        android:label="ScheduleAddFragment"
-        tools:layout="@layout/fragment_schedule_add" />
-    <fragment
-        android:id="@+id/scheduleDetailFragment"
-        android:name="io.maintenancevehicle.views.schedule_view.schedule_detail.ScheduleDetailFragment"
-        android:label="ScheduleDetailFragment"
-        tools:layout="@layout/fragment_schedule_detail">
-        <action
-            android:id="@+id/action_scheduleDetailFragment_to_scheduleEditFragment"
-            app:destination="@id/scheduleEditFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/scheduleEditFragment"
-        android:name="io.maintenancevehicle.views.schedule_view.schedule_edit.ScheduleEditFragment"
-        android:label="ScheduleEditFragment"
-        tools:layout="@layout/fragment_schedule_edit" />
     <fragment
         android:id="@+id/vehicleListFragment"
         android:name="io.maintenancevehicle.views.vehicle.vehicle_list.VehicleListFragment"
         android:label="VehicleListFragment"
         tools:layout="@layout/fragment_vehicle_list">
-        <action
-            android:id="@+id/action_vehicleListFragment_to_maintenanceVehicleDetailFragment"
-            app:destination="@id/maintenanceVehicleDetailFragment" />
-        <action
-            android:id="@+id/action_vehicleListFragment_to_vehicleEditFragment"
-            app:destination="@id/vehicleEditFragment" />
+
         <action
             android:id="@+id/action_vehicleListFragment_to_vehicleAddFragment"
             app:destination="@id/vehicleAddFragment" />
+        <action
+            android:id="@+id/action_vehicleListFragment_to_vehicleDetailFragment"
+            app:destination="@id/vehicleDetailFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/maintenanceVehicleDetailFragment"
-        android:name="io.maintenancevehicle.views.maintenance_vehicle_view.maintenance_vehicle_detail.MaintenanceVehicleDetailFragment"
-        android:label="MaintenanceVehicleDetailFragment"
-        tools:layout="@layout/fragment_vehicle_detail" />
+
+
     <fragment
         android:id="@+id/vehicleEditFragment"
         android:name="io.maintenancevehicle.views.vehicle.vehicle_edit.VehicleEditFragment"
         android:label="VehicleEditFragment"
-        tools:layout="@layout/fragment_vehicle_edit" />
+        tools:layout="@layout/fragment_vehicle_edit">
+        <argument
+            android:name="vehicleId"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/vehicleAddFragment"
         android:name="io.maintenancevehicle.views.vehicle.vehicle_add.VehicleAddFragment"
@@ -210,6 +200,9 @@
         <action
             android:id="@+id/action_widgetListFragment_to_widgetDetailFragment"
             app:destination="@id/widgetDetailFragment" />
+        <action
+            android:id="@+id/action_widgetListFragment_to_widgetAddFragment"
+            app:destination="@id/widgetAddFragment" />
     </fragment>
     <fragment
         android:id="@+id/widgetAddFragment"
@@ -233,5 +226,38 @@
         android:id="@+id/widgetEditFragment"
         android:name="io.maintenancevehicle.views.widget.widget_edit.WidgetEditFragment"
         android:label="WidgetEditFragment"
-        tools:layout="@layout/fragment_widget_edit" />
+        tools:layout="@layout/fragment_widget_edit">
+
+        <argument
+            android:name="widgetId"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/qrCodeScannerFragment"
+        android:name="io.maintenancevehicle.views.qr_code_scanner.QrCodeScannerFragment"
+        android:label="QrCodeScannerFragment"
+        tools:layout="@layout/fragment_qr_code_scanner">
+
+        <argument
+            android:name="isBackToMenu"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/vehicleDetailFragment"
+        android:name="io.maintenancevehicle.views.vehicle.vehicle_detail.VehicleDetailFragment"
+        android:label="VehicleDetailFragment"
+        tools:layout="@layout/fragment_vehicle_detail">
+
+        <argument
+            android:name="vehicleId"
+            android:defaultValue=""
+            app:argType="string" />
+        <action
+            android:id="@+id/action_vehicleDetailFragment_to_vehicleEditFragment"
+            app:destination="@id/vehicleEditFragment" />
+
+    </fragment>
 </navigation>

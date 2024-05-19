@@ -10,8 +10,10 @@ object ServiceDetailRoute {
         fragment.findNavController().popBackStack()
     }
 
-    fun goToServiceEdit(fragment: Fragment) {
-        val action = ServiceDetailFragmentDirections.actionServiceDetailFragmentToServiceEditFragment()
+    fun goToServiceEdit(fragment: Fragment, serviceId: String) {
+        val action = ServiceDetailFragmentDirections.actionServiceDetailFragmentToServiceEditFragment(
+            serviceId = serviceId
+        )
         fragment.findNavController().navigate(action)
     }
 

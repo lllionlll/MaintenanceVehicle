@@ -2,7 +2,6 @@ package io.maintenancevehicle.views.customer.customer_add
 
 import android.content.Context
 import android.net.Uri
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +11,7 @@ import io.maintenancevehicle.data.model.Customer
 import io.maintenancevehicle.data.repository.MaintenanceVehicleRepository
 import io.maintenancevehicle.utils.ToastFunction
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -26,29 +26,16 @@ class CustomerAddViewModel @Inject constructor(
 
     fun addCustomer(
         context: Context,
-        uri: Uri?,
         customerEdit: Customer
     ) {
         viewModelScope.launch {
             try {
                 isLoading.value = true
-                var url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRNuiBY5AGqRjC890IW9MQ5_p5NYSysbFSBfs8LIcl8DSYx7sTngU8xpzyHuwitNfUmV4&usqp=CAU"
-                customerEdit.imageUrl = url
-                if (uri != null) {
-                    val uploadImageResult = withContext(Dispatchers.IO) {
-                        maintenanceVehicleRepository.uploadImage(context, uri)
-                    }
-                    if (uploadImageResult is DataResult.Success) {
-                        url = uploadImageResult.data
-                    }
-                    customerEdit.imageUrl = url
-                }
-
-                val addCustomerResult = withContext(Dispatchers.IO) {
-                    maintenanceVehicleRepository.addData(
-                        "customers",
-                        data = customerEdit,
-                        id = customerEdit.id
+                val randomDelay = (100..500).random().toLong()
+                delay(randomDelay)
+                withContext(Dispatchers.IO) {
+                    maintenanceVehicleRepository.saveCustomers(
+                        listOf(customerEdit)
                     )
                 }
                 ToastFunction.showMessage(context, "Thêm thành công!")

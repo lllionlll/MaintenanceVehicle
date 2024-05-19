@@ -159,7 +159,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_schedule" />
+                        android:src="@drawable/img_schedule_maintenance_device" />
 
                     <TextView
                         android:id="@+id/textSchedule"
@@ -167,7 +167,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="8dp"
-                        android:text="Lịch trình bảo dưỡng"
+                        android:text="Kế hoạch bảo dưỡng"
                         android:textColor="@color/black" />
                 </LinearLayout>
 
@@ -335,7 +335,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imgVehicle"
+                        android:id="@+id/img"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_gravity="center"

@@ -41,21 +41,21 @@ class CustomerDetailFragment : BaseFragment<FragmentCustomerDetailBinding>(
                 requireContext(),
                 onConfirm = {
                     customerDetailViewModel.deleteCustomer(
-                        customerId = customer.id
+                        requireContext(),
+                        customerId = customer.customerId
                     )
-                    CustomerDetailRoute.backScreen(this)
                 }
             )
         }
 
         binding.customerEdit.setOnClickListener {
-            CustomerDetailRoute.goToCustomerEdit(this, customer.id)
+            CustomerDetailRoute.goToCustomerEdit(this, customer.customerId)
         }
 
         binding.avatar.setOnClickListener {
             CustomerDetailRoute.goToImagePreview(
                 this,
-                customerId = customer.id
+                customerId = customer.customerId
             )
         }
     }
@@ -73,6 +73,7 @@ class CustomerDetailFragment : BaseFragment<FragmentCustomerDetailBinding>(
 
         customerDetailViewModel.customer.observe(viewLifecycleOwner) { customer ->
             this.customer = customer
+            binding.txtId.text = customer.customerId
             binding.name.text = customer.name
             binding.gender.text = customer.gender
             binding.phoneNumber.text = customer.phoneNumber
@@ -81,10 +82,16 @@ class CustomerDetailFragment : BaseFragment<FragmentCustomerDetailBinding>(
             binding.createdAt.text = customer.createdAt
             binding.updatedAt.text = customer.updatedAt
             binding.note.text = customer.note
-            Glide.with(binding.avatar.context)
+            Glide.with(requireContext())
                 .load(customer.imageUrl)
                 .into(binding.avatar)
             binding.scrollView.visibility = View.VISIBLE
+        }
+
+        customerDetailViewModel.isDeleteSuccess.observe(viewLifecycleOwner) {
+            if (it) {
+                CustomerDetailRoute.backScreen(this)
+            }
         }
     }
 }

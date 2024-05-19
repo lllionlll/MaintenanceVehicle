@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
+import io.maintenancevehicle.R
 import io.maintenancevehicle.bases.BaseFragment
 import io.maintenancevehicle.data.model.Customer
 import io.maintenancevehicle.databinding.FragmentCustomerAddBinding
@@ -40,7 +41,7 @@ class CustomerAddFragment : BaseFragment<FragmentCustomerAddBinding>(
         super.initView()
 
         Glide.with(requireContext())
-            .load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRNuiBY5AGqRjC890IW9MQ5_p5NYSysbFSBfs8LIcl8DSYx7sTngU8xpzyHuwitNfUmV4&usqp=CAU")
+            .load(R.drawable.ic_avatar_default)
             .into(binding.avatar)
     }
 
@@ -81,12 +82,13 @@ class CustomerAddFragment : BaseFragment<FragmentCustomerAddBinding>(
                 name = binding.name.text.toString(),
                 createdAt = DateFunction.formatDate(
                     Date(),
-                    "dd/MM/yyyy"
+                    "dd/MM/yyyy HH:mm"
                 ),
                 updatedAt = DateFunction.formatDate(
                     Date(),
-                    "dd/MM/yyyy"
+                    "dd/MM/yyyy HH:mm"
                 ),
+                imageUrl = (uri ?: "").toString(),
                 gender = genderList[binding.gender.selectedItemPosition],
                 homeTown = binding.address.text.toString(),
                 phoneNumber = binding.phone.text.toString(),
@@ -94,7 +96,6 @@ class CustomerAddFragment : BaseFragment<FragmentCustomerAddBinding>(
             )
             customerAddViewModel.addCustomer(
                 requireContext(),
-                uri,
                 customer
             )
         }

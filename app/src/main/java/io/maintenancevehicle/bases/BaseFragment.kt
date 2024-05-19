@@ -32,16 +32,22 @@ abstract class BaseFragment<VB : ViewBinding>(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
+                    if (onBackPressed()) {
+                        return
+                    }
                     val navController = findNavController()
                     if (navController.currentDestination?.id == navController.graph.startDestinationId) {
                         requireActivity().finishAndRemoveTask()
                     } else {
                         findNavController().navigateUp()
                     }
-
                 }
             })
         return binding.root
+    }
+
+    open fun onBackPressed(): Boolean {
+        return false
     }
 
     open fun initData() {

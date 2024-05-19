@@ -36,7 +36,8 @@ object MenuRoute {
     }
 
     fun goToWidgetVehicle(fragment: Fragment) {
-
+        val action = MenuFragmentDirections.actionMenuFragmentToWidgetListFragment()
+        fragment.findNavController().navigate(action)
     }
 
     fun goToVehicleList(fragment: Fragment) {

@@ -2,7 +2,6 @@ package io.maintenancevehicle.views.customer.customer_edit
 
 import android.R
 import android.net.Uri
-import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -12,13 +11,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.maintenancevehicle.bases.BaseFragment
 import io.maintenancevehicle.data.model.Customer
 import io.maintenancevehicle.databinding.FragmentCustomerEditBinding
-import io.maintenancevehicle.utils.ConfirmDialog
 import io.maintenancevehicle.utils.DateFunction
 import io.maintenancevehicle.utils.LoadingDialog
 import io.maintenancevehicle.views.customer.customer_detail.CustomerDetailFragmentArgs
-import io.maintenancevehicle.views.customer.customer_detail.CustomerDetailRoute
-import io.maintenancevehicle.views.customer.customer_detail.CustomerDetailViewModel
-import io.maintenancevehicle.views.customer.customer_management.CustomerManagementRoute
 import java.util.Date
 
 @AndroidEntryPoint
@@ -73,17 +68,14 @@ class CustomerEditFragment : BaseFragment<FragmentCustomerEditBinding>(
         }
         binding.btnEdit.setOnClickListener {
             val customer = Customer(
-                id = this.customer.id,
-                imageUrl = this.customer.imageUrl,
+                customerId = this.customer.customerId,
+                imageUrl = (uri ?: this.customer.imageUrl).toString(),
                 birthday = binding.birthday.text.toString(),
                 name = binding.name.text.toString(),
-                createdAt = DateFunction.formatDate(
-                    Date(),
-                    "dd/MM/yyyy"
-                ),
+                createdAt = this.customer.createdAt,
                 updatedAt = DateFunction.formatDate(
                     Date(),
-                    "dd/MM/yyyy"
+                    "dd/MM/yyyy HH:mm"
                 ),
                 gender = genderList[binding.gender.selectedItemPosition],
                 homeTown = binding.address.text.toString(),
@@ -92,7 +84,6 @@ class CustomerEditFragment : BaseFragment<FragmentCustomerEditBinding>(
             )
             customerEditViewModel.editCustomer(
                 requireContext(),
-                uri,
                 customer
             )
         }
